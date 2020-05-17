@@ -43,7 +43,6 @@ ARG RUN_USER_GID=1012
 
 RUN apt-get update && apt-get install -y \
   rsync \
-#  build-essential \
   iproute2 \
   iputils-ping \
   sudo \
@@ -59,9 +58,6 @@ RUN mkdir -p /home/${RUN_USER}/.rpki-cache/repository /home/${RUN_USER}/.rpki-ca
 
 COPY --from=build /tmp/routinator/tals/*.tal /home/${RUN_USER}/.rpki-cache/tals/
 
-#Root option
-#COPY --from=build /tmp/routinator/tals/*.tal /root/.rpki-cache/tals/
-
 # Change network namespace to global-vrf for XR usage
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
@@ -72,5 +68,4 @@ EXPOSE 3323/tcp
 EXPOSE 9556/tcp
 
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
-</pre>  
-</div> 
+
