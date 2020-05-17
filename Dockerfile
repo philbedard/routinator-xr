@@ -3,8 +3,8 @@
 FROM ubuntu:18.04 as build
 
 # Proxy environment variables if needed for git  
-# ENV http_proxy=http://myproxy.com:80
-# ENV https_proxy=http://myproxy.com:80
+ENV http_proxy=http://proxy.esl.cisco.com:80
+ENV https_proxy=http://proxy.esl.cisco.com:80
 
 
 # Add Tini
@@ -61,8 +61,6 @@ COPY --from=build /tmp/routinator/tals/*.tal /home/${RUN_USER}/.rpki-cache/tals/
 # Change network namespace to global-vrf for XR usage
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-#USER $RUN_USER_UID
 
 EXPOSE 3323/tcp
 EXPOSE 9556/tcp
