@@ -6,7 +6,13 @@ then
   exec "$@"
 else
    VRF="${VRF:-global-vrf}"
-   echo "Using default $VRF as namespace, override with -e VRF=vrf if using a different VRF for TPA"
+   echo "Using $VRF as namespace, override with -e VRF=vrf if using a different VRF for TPA"
+   
+   RTR_PORT="${RTR_PORT:-3323}"
+   echo "Using $RTR_PORT as RTR server port, override with -e RTR_PORT=port"  
+   
+   HTTP_PORT="${HTTP_PORT:-9556}"
+   echo "Using $HTTP_PORT as Routinator HTTP server port, override with -e HTTP_PORT=port"  
 
    if [[ -v RSYNC_PROXY ]];
    then
@@ -48,5 +54,5 @@ else
                                         --base-dir /data/rpki/ \
                                         --verbose \
                                         $RRDP_ARG \
-                                        server --rtr 0.0.0.0:3323 --http 0.0.0.0:9556
+                                        server --rtr 0.0.0.0:$RTR_PORT--http 0.0.0.0:$HTTP_PORT
 fi
