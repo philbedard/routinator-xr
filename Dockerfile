@@ -2,7 +2,7 @@
 
 FROM ubuntu:18.04 as build
 
-# Proxy environment variables if needed for apt-get, cargo, and git  
+# Proxy environment variables if needed for git  
 # ENV http_proxy=http://myproxy.com:80
 # ENV https_proxy=http://myproxy.com:80
 
