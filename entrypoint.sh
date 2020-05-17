@@ -40,7 +40,8 @@ else
    sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals
 
    echo "Adding nameserver in ${VRF} namespace"
-   ip netns exec ${VRF} echo "nameserver ${NS1}" > /etc/resolv.conf
+#   ip netns exec ${VRF} echo "nameserver ${NS1}" > /etc/resolv.conf
+#   ip netns exec ${VRF} echo "nameserver ${NS2}" >> /etc/resolv.conf
 
    echo "Starting Routinator"
    ip netns exec ${VRF} sudo -E -u routinator routinator \
