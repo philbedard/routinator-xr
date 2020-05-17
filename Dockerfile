@@ -3,8 +3,8 @@
 FROM ubuntu:18.04 as build
 
 # Proxy environment variables if needed for apt-get, cargo, and git  
-ENV http_proxy=http://myproxy.com:80
-ENV https_proxy=http://myproxy.com:80
+# ENV http_proxy=http://myproxy.com:80
+# ENV https_proxy=http://myproxy.com:80
 
 
 # Add Tini
