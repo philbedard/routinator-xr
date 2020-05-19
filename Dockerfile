@@ -57,7 +57,7 @@ COPY --from=build /tmp/routinator/tals/*.tal /home/${RUN_USER}/.rpki-cache/tals/
 # The ARIN TAL is distributed with the image but you will not use it by 
 # default. If you have accepted the ARIN TAL usage at https://www.arin.net/resources/rpki/tal.html
 # you can comment out the following line so all TALs are in the TAL directory at build time
-# Otherwise you must run the initial image with the "accept-arin-rpa" command. 
+# Otherwise you must run interactive accept the ARIN RPA with the "init" command 
 RUN mv /home/${RUN_USER}/.rpki-cache/tals/arin.tal /home/${RUN_USER}/.rpki-cache/tals/arin/  
 
 # Copy entrypoint.sh to root of image for execuation 
