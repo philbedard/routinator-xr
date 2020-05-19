@@ -8,7 +8,7 @@ then
    chown -R routinator:routinator /data/rpki/
 
    echo "Copying TAL data from container to host directory"
-   sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals
+   sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals 2>&1 
    
    echo "Please read the ARIN RPA at https://www.arin.net/resources/manage/rpki/rpa.pdf"  
    read -p "If you agree with the ARIN RPA type 'yes', any other input will mean non-agreement and the ARIN TAL will NOT be installed: " ARIN_RPA 

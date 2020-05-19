@@ -3,8 +3,8 @@
 FROM ubuntu:18.04 as build
 
 # Proxy environment variables if needed for git  
-#ENV http_proxy=http://proxy.esl.cisco.com:80
-#ENV https_proxy=http://proxy.esl.cisco.com:80
+ENV http_proxy=http://proxy.esl.cisco.com:80
+ENV https_proxy=http://proxy.esl.cisco.com:80
 
 # Add Tini
 ENV TINI_VERSION v0.15.0
