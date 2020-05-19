@@ -37,10 +37,10 @@ Environment variables specified with -e are how docker passes arguments to conta
 
 |Environment Variable | Default | Definition | 
 |------|------|--------------------------------------------------------------------------| 
-| VRF | global-vrf |  Sets the IOS-XR namespace routinator runs in. The defualt is the global-vrf namespace. See the network section for more information |
+| VRF | global-vrf |  Sets the IOS-XR namespace routinator runs in. global-vrf is the global routing table |
 | RSYNC_PROXY | none | If your environment requires a proxy to reach RSYNC destinations, use this variable. The rsync proxy is not prefixed by http/https |  
-| RRDP_PROXY | none | RRDP uses HTTPS, so if you require a HTTP/HTTPS proxy use this variable |  
+| RRDP_PROXY | none | RRDP uses HTTPS, so if you require a HTTPS proxy use this variable |  
 | NS1 | 208.67.222.222 |  Primary nameserver | 
 | NS2 | 208.67.220.220 |  Secondary nameserver |
 | RTR_PORT | 3323 | RTR server port | 
-| HTTP_PORT | Routinator http API port | 
+| HTTP_PORT | 9556 | Routinator HTTP API port | 
