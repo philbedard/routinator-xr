@@ -8,7 +8,7 @@ then
    chown -R routinator:routinator /data/rpki/
 
    echo "Copying TAL data from container to host directory"
-   sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals 2>&1 
+   sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals 2>/dev/null 
    
    # ARIN tal existance means it was included in the Docker image build  
    if [[ ! -f "/home/routinator/.rpki-cache/tals/arin.tal" ]]; 

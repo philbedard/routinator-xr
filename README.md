@@ -3,8 +3,18 @@ Docker build script to run Routinator 3000 on IOS-XR, please see the blog at htt
 
 Launched with a container built as "routinator-xr" or alternatively can be run using the Docker hub with `philxor/routinator-xr`. Full example options listed below.    
 
-Note IOS-XR does not require the port be exposed using "-p" when running the container, it will externally listen to any port the container application binds.  
+## First run with "init"  
+The container must initially be run with the "init" command to initialize the data directories and accept the ARIN RPA. The following will run a single-use container that will setup the directories and present the user with an option to accept the ARIN RPA. The container must be run with the -it switch for interactive input.    
 
+<pre> 
+docker run --name routinator \
+           --it \
+           --rm \
+           -v /misc/app_host:/data \
+           routinator-xr init
+</pre>
+
+## Subsequent runs 
 <pre>
 docker run --name routinator \
            --restart always \

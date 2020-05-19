@@ -44,6 +44,7 @@ RUN apt-get update && apt-get install -y \
   iproute2 \
   iputils-ping \
   sudo \
+  vim \
   && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -u $RUN_USER_GID -U $RUN_USER && \ 
