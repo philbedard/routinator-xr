@@ -10,15 +10,19 @@ then
    echo "Copying TAL data from container to host directory"
    sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals 2>&1 
    
-   echo "Please read the ARIN RPA at https://www.arin.net/resources/manage/rpki/rpa.pdf"  
-   read -p "If you agree with the ARIN RPA type 'yes', any other input will mean non-agreement and the ARIN TAL will NOT be installed: " ARIN_RPA 
-   if [ "$ARIN_RPA" = "yes" ];
-   then 
-      echo "User agreed to ARIN TAL, copying ARIN TAL file"  
-      sudo -u routinator cp /home/routinator/.rpki-cache/tals/arin/* /data/rpki/tals
-   else 
-      echo "User declined ARIN TAL, will not be installed in TALS directory. Rerun init to copy, or copy manually after agreeing" 
-   fi 
+   # ARIN tal existance means it was included in the Docker image build  
+   if [[ ! -f "/home/routinator/.rpki-cache/tals/arin.tal" ]]; 
+   then    
+       echo "Please read the ARIN RPA at https://www.arin.net/resources/manage/rpki/rpa.pdf"  
+       read -p "If you agree with the ARIN RPA type 'yes', any other input will mean non-agreement and the ARIN TAL will NOT be installed: " ARIN_RPA 
+       if [ "$ARIN_RPA" = "yes" ];
+       then 
+         echo "User agreed to ARIN TAL, copying ARIN TAL file"  
+         sudo -u routinator cp /home/routinator/.rpki-cache/tals/arin/* /data/rpki/tals
+       else 
+         echo "User declined ARIN TAL, will not be installed in TALS directory. Rerun init to copy, or copy manually after agreeing" 
+       fi
+    fi 
 elif [ ! "$#" -eq 0 ];
 then
   echo "Starting command $@"
