@@ -1,5 +1,5 @@
 # routinator-xr
-Docker build script to run Routinator 3000 on IOS-XR, please see the blog at https://xrdocs.io/blogs/routinator-hosted-on-xr for much more detail.   
+Docker build script to run Routinator 3000 on IOS-XR, please see the blog at https://xrdocs.io/design/blogs/routinator-hosted-on-xr for much more detail.   
 
 Launched with a container built as "routinator-xr" or alternatively can be run using the Docker hub with `philxor/routinator-xr`. Full example options listed below.    
 
