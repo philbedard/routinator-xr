@@ -47,13 +47,18 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -u $RUN_USER_GID -U $RUN_USER && \ 
-    mkdir -p /home/${RUN_USER}/.rpki-cache/repository /home/${RUN_USER}/.rpki-cache/tals && \
+    mkdir -p /home/${RUN_USER}/.rpki-cache/repository /home/${RUN_USER}/.rpki-cache/tals/arin && \
     chown -R ${RUN_USER_UID}:${RUN_USER_GID} /usr/local/bin/routinator /home/${RUN_USER}/.rpki-cache
 
 # Copy TAL files from source to user directory
 # Requires acceptance of ARIN TAL at https://www.arin.net/resources/rpki/tal.html
-
 COPY --from=build /tmp/routinator/tals/*.tal /home/${RUN_USER}/.rpki-cache/tals/
+
+# The ARIN TAL is distributed with the image but you will not use it by 
+# default. If you have accepted the ARIN TAL usage at https://www.arin.net/resources/rpki/tal.html
+# you can comment out the following line so all TALs are in the TAL directory at build time
+# Otherwise you must run the initial image with the "accept-arin-rpa" command. 
+RUN mv /home/${RUN_USER}/.rpki-cache/tals/arin.tal /home/${RUN_USER}/.rpki-cache/tals/arin/  
 
 # Copy entrypoint.sh to root of image for execuation 
 COPY entrypoint.sh /entrypoint.sh

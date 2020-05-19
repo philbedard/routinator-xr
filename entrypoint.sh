@@ -1,10 +1,34 @@
 #!/bin/bash
 
-if [ ! "$#" -eq 0 ];
+if [[ $1 == "init" ]]; 
+then 
+   echo "Creating RPKI data directory at /misc/app_host/rpki"
+   mkdir -p /data/rpki/tals
+   mkdir -p /data/rpki/repository
+   chown -R routinator:routinator /data/rpki/
+
+   echo "Copying TAL data from container to host directory"
+   sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals
+   
+   echo "Please read the ARIN RPA at https://www.arin.net/resources/manage/rpki/rpa.pdf"  
+   read -p "If you agree with the ARIN RPA type 'yes', any other input will mean non-agreement and the ARIN TAL will NOT be installed: " ARIN_RPA 
+   if [ "$ARIN_RPA" = "yes" ];
+   then 
+      echo "User agreed to ARIN TAL, copying ARIN TAL file"  
+      sudo -u routinator cp /home/routinator/.rpki-cache/tals/arin/* /data/rpki/tals
+   else 
+      echo "User declined ARIN TAL, will not be installed in TALS directory. Rerun init to copy, or copy manually after agreeing" 
+   fi 
+elif [ ! "$#" -eq 0 ];
 then
   echo "Starting command $@"
   exec "$@"
 else
+   if [[ ! -d "/data/rpki" ]];
+      then  
+      echo "Please run container with 'init' to create directories and copy TAL files" 
+      exit 1
+   fi 
    VRF="${VRF:-global-vrf}"
    echo "Using $VRF as namespace, override default of global-vrf with -e VRF=vrf if using a different VRF for TPA"
    
@@ -20,7 +44,6 @@ else
    else
       echo "No rsync proxy set, set using -e RSYNC_PROXY=proxy (not URI) in docker run if required"
    fi
-
    if [[ -v RRDP_PROXY ]];
    then
       echo "Using $RRDP_PROXY as rrdp proxy"
@@ -37,15 +60,6 @@ else
    echo "Using "$NS2" as secondary DNS server, override with -e NS2=nameserver to override default of 208.67.220.220"
    echo "nameserver "$NS2"" >> /etc/resolv.conf
 
-   echo "Creating RPKI data directory at /misc/app_host/rpki"
-   mkdir -p /data/rpki/tals
-   mkdir -p /data/rpki/repository
-   chown -R routinator:routinator /data/rpki/
-
-   echo "Copying TAL data from container to host directory"
-   sudo -u routinator cp /home/routinator/.rpki-cache/tals/* /data/rpki/tals
-
-   echo "Adding nameserver in ${VRF} namespace"
 
    echo "Starting Routinator"
    ip netns exec ${VRF} sudo -E -u routinator routinator \
